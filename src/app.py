@@ -35,11 +35,6 @@ def handle_hello():
     }
     return jsonify(response_body), 200
 
-#recuperar miembros de la familia
-@app.route('/members/', methods=['GET'])
-def handle_member(member_id):
-     members = jackson_family.get_member(member_id)
-     return jsonify(members), 200
 
 @app.route('/member/', methods=['POST'])
 def add_member():

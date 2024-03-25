@@ -13,18 +13,51 @@ class FamilyStructure:
         self.last_name = last_name
 
         # example list of members
-        self._members = []
+        self._members = [
+            {
+                "id": self._generateId(),
+                "first_name": "John",
+                "last_name": last_name,
+                "age": 33,
+                "lucky_numbers": [7, 13, 22]
+            },
+            {
+                "id": self._generateId(),
+                "first_name": "Jane",
+                "last_name": last_name,
+                "age": 35,
+                "lucky_numbers": [10, 14, 3]
+            },
+            {
+                "id": self._generateId(),
+                "first_name": "Jimmy",
+                "last_name": last_name,
+                "age": 5,
+                "lucky_numbers": [1,2,3]
+            }
+        ]
+
+
 
     # read-only: Use this method to generate random members ID's when adding members into the list
     def _generateId(self):
         return randint(0, 99999999)
 
-    #añadir miembro
+ #añadir miembro
     def add_member(self, member):
-        if not member.get("id"):
+        # Verificar si se proporcionan los campos requeridos
+        required_fields = ["first_name", "age", "lucky_numbers"]
+        if not all(field in member for field in required_fields):
+            raise ValueError("Missing required fields")  
+
+        # Completar los campos opcionales si no están presentes en el miembro proporcionado
+        if "id" not in member:
             member["id"] = self._generateId()
+        if "last_name" not in member:
+            member["last_name"] = self.last_name
+
+        # Añadir el miembro a la lista de miembros
         self._members.append(member)
-        print("añadir miembro", member)
     
     #eliminar miembro
     def delete_member(self, id):
